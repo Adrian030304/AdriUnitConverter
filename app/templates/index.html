@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="{{url_for('static'), filename='styles.css'}}">
+    <title>{%block title%}{%endblock%}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
 </head>
 <body>
     <div class="main-content">
@@ -12,9 +12,9 @@
         <div class="conversion-form">
             <div class="title">Adri Unit Conversion</div>
             <div class="nav">
-                <div class="nav-slider" id="length"><a href="http://">Length</a></div>
-                <div class="nav-slider" id="temperature"><a href="http://">Temperature</a></div>
-                <div class="nav-slider" id="weight"><a href="http://">Weight</a></div>
+                <div class="nav-slider {%if active == 'length' %} active {%endif%}" id="length"><a href="{{url_for('length_page')}}">Length</a></div>
+                <div class="nav-slider {%if active == 'temperature' %} active {%endif%}" id="temperature"><a href="http://">Temperature</a></div>
+                <div class="nav-slider {%if active == 'weight' %} active {%endif%}" id="weight"><a href="http://">Weight</a></div>
             </div>
             {% if request.method == 'POST' %}
             <div class="result">
