@@ -6,23 +6,35 @@ from flask import render_template, redirect, url_for, request, send_from_directo
 def index():
 
     units = {
-        "mm": pow(10,-3),
-        "cm" : pow(10,-2),
-        "m" :  pow(10,0),
-        "km": pow(10,3),
+        "mm": float(pow(10,-3)),
+        "cm" : float(pow(10,-2)),
+        "m" :  float(pow(10,0)),
+        "km": float(pow(10,3)),
         "inch": 0.0254,
         "foot": 0.0254 * 12,
         "yard": 0.0254 * 12 * 3,
         "mile": 0.0254 * 12 * 3 * 1760
     }
-    print(units)
+
+    result = None
 
     if request.method == 'POST':
+
         value, _from, _to = request.form.values()
+        if not value:
+            value = 0
+
+        f_key = next(k for k, v in units.items() if v == float(_from))
+
+        t_key = next(k for k, v in units.items() if v == float(_to))
         
         value, _from, _to = float(value), float(_from), float(_to)
-        print(value, _from, _to)
 
+        final = value * (_from / _to)
+
+        value, final = f"{value:.2f}", f"{final:.2f}"
+        
+        return render_template('index.html', units = units, result = [value, f_key, t_key, final])
 
     return render_template('index.html', units = units)
 
