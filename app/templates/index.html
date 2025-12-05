@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .main-content{
+            border: 1px solid red;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: scroll;
+        }
+        .conversion-form{
+            border: 1px solid purple;
+            height: 560px;
+            max-height: 100%;
+            width: 380px;
+        }
+        .nav {
+            display: flex;
+            justify-content:space-around;
+        }
+        .title {
+            text-align: center;
+            font-size: 2em;
+            padding:5px;
+        }
+        .nav, .form {
+            font-size: 1.5em;
+        }
+        <!-- .form {
+            margin-top: 10px;
+        } -->
+        .form-body{
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #convert-btn{
+            height: 2rem;
+            width: 6rem;
+            margin-top: 15px;
+            padding: 5px;
+        }
+        #val, #to, #from {
+            height: 2rem;
+            padding: 15px 10px;
+            font-size: 1.5rem;
+            margin-bottom: 5%;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        
+        <div class="conversion-form">
+            <div class="title">Adri Unit Conversion</div>
+            <div class="nav">
+                <div class="nav-slider" id="length">Length</div>
+                <div class="nav-slider" id="temperature">Temperature</div>
+                <div class="nav-slider" id="weight">Weight</div>
+            </div>
+            <div class="form">
+                <form action="" class="form-body">
+                    <label for="val">Enter the length to convert</label>
+                    <input type="text" name="value" id="val">
+                    <label for="from">Unit to convert from</label>
+                    <input type="text" name="from" id="from">
+                    <label for="from">Unit to convert to</label>
+                    <input type="text" name="to" id="to">
+                    <input type="button" value="Convert" id="convert-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
