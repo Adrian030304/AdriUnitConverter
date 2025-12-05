@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, request, send_from_directo
 
 
 @app.route("/", methods=['POST','GET'])
-def index():
+def length_page():
 
     units = {
         "mm": float(pow(10,-3)),
@@ -34,9 +34,9 @@ def index():
 
         value, final = f"{value:.2f}", f"{final:.2f}"
         
-        return render_template('index.html', units = units, result = [value, f_key, t_key, final])
+        return render_template('length_page.html', units = units, result = [value, f_key, t_key, final])
 
-    return render_template('index.html', units = units)
+    return render_template('length_page.html', units = units)
 
 
 @app.route('/length')
