@@ -2,7 +2,11 @@ from app import app
 from flask import render_template, redirect, url_for, request, send_from_directory, send_file, Response, flash
 
 
-@app.route("/", methods=['POST','GET'])
+@app.route("/")
+def index():
+    return redirect(url_for('length_page'))
+
+@app.route('/length', methods=['POST','GET'])
 def length_page():
 
     units = {
@@ -34,11 +38,17 @@ def length_page():
 
         value, final = f"{value:.2f}", f"{final:.2f}"
         
-        return render_template('length_page.html', units = units, result = [value, f_key, t_key, final])
+        return render_template('length.html', units = units, result = [value, f_key, t_key, final], active = 'length')
 
-    return render_template('length_page.html', units = units)
+    return render_template('length.html', units = units, active = 'length')
 
 
-@app.route('/length')
-def length_page():
-    print(request.form)
+@app.route('/temperature', methods=['POST','GET'])
+def temperature_page():
+
+    return render_template('temperature.html', active='temperature')
+
+@app.route('/weight', methods=['POST','GET'])
+def weight_page():
+
+    return render_template('weight.html', active='weight')

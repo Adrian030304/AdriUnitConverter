@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+
+{%block title%}Length{%endblock%}
+
+{%block content%}
+{% if request.method == 'POST' %}
+    <div class="result">
+        <p>Result of your calculation: </p>
+        <p id="form-result">{{result[0]}} {{result[1]}} = {{result[3]}} {{result[2]}}</p>
+        <a href="{{url_for('length_page')}}" id="reset">Reset</a>
+    </div>
+{% else %}
+<div class="form">
+    <form action="{{url_for('length_page')}}" class="form-body" method="post">
+
+        <label for="val">Enter the length to convert</label>
+        <input type="text" name="value" id="val">
+        <span id="error">Warning: You can only insert numbers.</span>
+
+        <label for="from">Unit to convert from</label>
+        <select name="from" id="from">
+            {%for u, v in units.items() %}
+                <option value="{{v}}">{{u}}</option>
+            {%endfor%}
+        </select>
+        
+        <label for="to">Unit to convert to</label>
+        <select name="to" id="to">
+            {%for u, v in units.items() %}
+                <option value="{{v}}">{{u}}</option>
+            {%endfor%}
+        </select>
+        
+        <input type="submit" value="Convert" id="convert-btn">
+    </form>
+</div>
+{% endif %}
+
+{%endblock%}
