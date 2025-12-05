@@ -9,6 +9,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: "Source Sans Pro", "Arial", sans-serif;
         }
         .main-content{
             border: 1px solid red;
@@ -36,6 +37,21 @@
         .nav, .form {
             font-size: 1.5em;
         }
+        .nav-slider {
+            width: 100%;
+            text-align: center;
+            padding: 5px;
+        }
+        .nav-slider a {
+            text-decoration: none;
+            color: black;
+            font-weight: 700;
+        }
+
+        .nav-slider a:hover {
+            text-decoration: underline;
+        }
+
         <!-- .form {
             margin-top: 10px;
         } -->
@@ -53,9 +69,9 @@
             padding: 5px;
         }
         #val, #to, #from {
-            height: 2rem;
-            padding: 15px 10px;
-            font-size: 1.5rem;
+            height: fit-content;
+            padding: 5px 2px;
+            font-size: 1rem;
             margin-bottom: 5%;
         }
     </style>
@@ -66,22 +82,33 @@
         <div class="conversion-form">
             <div class="title">Adri Unit Conversion</div>
             <div class="nav">
-                <div class="nav-slider" id="length">Length</div>
-                <div class="nav-slider" id="temperature">Temperature</div>
-                <div class="nav-slider" id="weight">Weight</div>
+                <div class="nav-slider" id="length"><a href="http://">Length</a></div>
+                <div class="nav-slider" id="temperature"><a href="http://">Temperature</a></div>
+                <div class="nav-slider" id="weight"><a href="http://">Weight</a></div>
             </div>
             <div class="form">
-                <form action="" class="form-body">
+                <form action="/" class="form-body" method="post">
                     <label for="val">Enter the length to convert</label>
                     <input type="text" name="value" id="val">
                     <label for="from">Unit to convert from</label>
-                    <input type="text" name="from" id="from">
-                    <label for="from">Unit to convert to</label>
-                    <input type="text" name="to" id="to">
-                    <input type="button" value="Convert" id="convert-btn">
+                    <!-- <input type="text" name="from" id="from"> -->
+                    <select name="from" id="from">
+                        {%for u, v in units.items() %}
+                            <option value="{{v}}">{{u}}</option>
+                        {%endfor%}
+                    </select>
+                    <label for="to">Unit to convert to</label>
+                    <select name="to" id="to">
+                        {%for u, v in units.items() %}
+                            <option value="{{v}}">{{u}}</option>
+                        {%endfor%}
+                    </select>
+                    <!-- <input type="text" name="to" id="to"> -->
+                    <input type="submit" value="Convert" id="convert-btn">
                 </form>
             </div>
         </div>
     </div>
+    <script src="{{ url_for('static', filename = 'main.js') }}"></script>
 </body>
 </html>
