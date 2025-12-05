@@ -55,24 +55,46 @@
         <!-- .form {
             margin-top: 10px;
         } -->
-        .form-body{
+        .form-body, .result{
             display: flex;
             flex-direction: column;
             width: 80%;
             margin-left: auto;
             margin-right: auto;
         }
-        #convert-btn{
+
+        .result{
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        #form-result {
+            margin-top: 2%;
+            font-size: 1.7rem;
+        }
+        #convert-btn, #reset{
             height: 2rem;
             width: 6rem;
             margin-top: 15px;
             padding: 5px;
         }
+        #reset {
+            text-decoration: none;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
         #val, #to, #from {
             height: fit-content;
             padding: 5px 2px;
             font-size: 1rem;
-            margin-bottom: 5%;
+        }
+        label{
+            margin-top: 3%;
+            margin-bottom: 2%;
+        }
+        #error{
+            color: red;
+            font-size: small;
+            display: none;
         }
     </style>
 </head>
@@ -86,27 +108,38 @@
                 <div class="nav-slider" id="temperature"><a href="http://">Temperature</a></div>
                 <div class="nav-slider" id="weight"><a href="http://">Weight</a></div>
             </div>
+            {% if request.method == 'POST' %}
+            <div class="result">
+                <p>Result of your calculation: </p>
+                <p id="form-result">{{result[0]}} {{result[1]}} = {{result[3]}} {{result[2]}}</p>
+                <a href="{{url_for('index')}}" id="reset">Reset</a>
+            </div>
+            {% else %}
             <div class="form">
                 <form action="/" class="form-body" method="post">
+
                     <label for="val">Enter the length to convert</label>
                     <input type="text" name="value" id="val">
+                    <span id="error">Warning: You can only insert numbers.</span>
+
                     <label for="from">Unit to convert from</label>
-                    <!-- <input type="text" name="from" id="from"> -->
                     <select name="from" id="from">
                         {%for u, v in units.items() %}
                             <option value="{{v}}">{{u}}</option>
                         {%endfor%}
                     </select>
+                    
                     <label for="to">Unit to convert to</label>
                     <select name="to" id="to">
                         {%for u, v in units.items() %}
                             <option value="{{v}}">{{u}}</option>
                         {%endfor%}
                     </select>
-                    <!-- <input type="text" name="to" id="to"> -->
+                    
                     <input type="submit" value="Convert" id="convert-btn">
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
     <script src="{{ url_for('static', filename = 'main.js') }}"></script>
