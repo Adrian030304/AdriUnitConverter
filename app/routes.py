@@ -50,5 +50,29 @@ def temperature_page():
 
 @app.route('/weight', methods=['POST','GET'])
 def weight_page():
+    weight_units = {
+        "miligram":pow(10,-3),
+        "gram":pow(10,0),
+        "kilogram":pow(10,3),
+        "ounce":28.350,
+        "pound":454.00
+    }
 
-    return render_template('weight.html', active='weight')
+    result = None
+
+    if request.method == 'POST':
+
+        form_values = {k:float(v) if v else 0 for k,v in request.form.items()}.values()
+        value, _from, _to = form_values
+
+        f_key = next(k for k, v in weight_units.items() if v == _from)
+
+        t_key = next(k for k, v in weight_units.items() if v == _to)
+
+        final = value * (_from / _to)
+
+        value, final = f"{value:.2f}", f"{final:.2f}"
+
+        return render_template('weight.html', units = weight_units, result = [value, f_key, t_key, final], active = 'weight')
+
+    return render_template('weight.html', active='weight', units = weight_units)
