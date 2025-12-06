@@ -46,7 +46,39 @@ def length_page():
 @app.route('/temperature', methods=['POST','GET'])
 def temperature_page():
 
-    return render_template('temperature.html', active='temperature')
+    temperature_units = {
+        "Celsius":0,
+        "Fahrenheit":0,
+        "Kelvin":0
+    }
+
+    if request.method == 'POST':
+
+        response_values = {k:v if v else 0 for k,v in request.form.items()}.values()
+
+        value, _from, _to = response_values
+        value = float(value)
+        final = 0
+        #transformam orice unitate in cea de baza celsius
+        if _from.lower() == 'fahrenheit':
+            final = (value - 32) * 5/9
+        elif _from.lower() == 'kelvin':
+            final = value - 273.15
+        else:
+            final = value
+        
+        #transformam din celsius in unitatea tinta
+        if _to.lower() == 'fahrenheit':
+            final = value *  9/5 + 32
+        elif _to.lower() == 'kelvin':
+            final = value + 273.15
+        else:
+            final = value
+
+        return render_template('temperature.html', units = temperature_units, result = [value, _from, _to, final], active = 'temperature')
+
+
+    return render_template('temperature.html', active='temperature', units = temperature_units)
 
 @app.route('/weight', methods=['POST','GET'])
 def weight_page():
@@ -57,8 +89,6 @@ def weight_page():
         "ounce":28.350,
         "pound":454.00
     }
-
-    result = None
 
     if request.method == 'POST':
 
